@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./components/header/header";
 import Category from "./components/category/category";
 import NutritionFacts from "./components/nutrition-facts/NutritionFacts";
+import CaloriesGoal from "./components/calories-goal/CaloriesGoal";
 
 const foodData = {
   proteins: [
@@ -251,11 +252,14 @@ class App extends Component {
       buttonDirection: ">>",
       calories: 0,
       selectedItems: [],
+      caloriesGoal: 2000,
+      calorieGoalModal: false,
     };
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.changeFoodListHandler = this.changeFoodListHandler.bind(this);
     this.changeSelectItemHandler = this.changeSelectItemHandler.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.changeCalorieGoalHandler = this.changeCalorieGoalHandler.bind(this);
   }
 
   handleCategoryChange(evt) {
@@ -305,10 +309,24 @@ class App extends Component {
     this.setState({ selectedItem: evt.target.value, buttonDirection: "<<" });
   }
 
+  changeCalorieGoalHandler(evt) {
+    this.setState({ caloriesGoal: evt.target.value });
+  }
+
   render() {
     return (
       <div>
         <Header />
+        <CaloriesGoal
+          caloriesGoal={this.state.caloriesGoal}
+          modalOpen={this.state.calorieGoalModal}
+          toggleModal={() =>
+            this.setState((prevState) => ({
+              calorieGoalModal: !prevState.calorieGoalModal,
+            }))
+          }
+          changeCalorieGoal={this.changeCalorieGoalHandler}
+        />
         <Category
           state={this.state}
           changeSelectItemHandler={this.changeSelectItemHandler}
