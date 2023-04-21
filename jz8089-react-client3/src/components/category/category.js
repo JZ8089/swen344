@@ -3,13 +3,26 @@ import "./category.css";
 
 function Category(props) {
   const AddButton = () => (
-    <Button color="primary" onClick={props.handleButtonClick}>
+    <Button
+      color="primary"
+      onClick={props.handleButtonClick}
+      disabled={
+        props.state.buttonDirection === "<<" ||
+        !props.state.categoryItems.length ||
+        !props.state.selectedItem
+      }
+    >
       {">>"}
     </Button>
   );
 
   const RemoveButton = () => (
-    <Button color="danger" onClick={props.handleButtonClick}>
+    <Button
+      color="danger"
+      onClick={props.handleButtonClick}
+      className="mx-3"
+      disabled={props.state.buttonDirection === ">>"}
+    >
       {"<<"}
     </Button>
   );
@@ -40,12 +53,9 @@ function Category(props) {
           </select>
         </Col>
 
-        <Col className="my-4 text-center">
-          {props.state.buttonDirection === ">>" ? (
-            <AddButton />
-          ) : (
-            <RemoveButton />
-          )}
+        <Col className="my-4">
+          <RemoveButton />
+          <AddButton />
         </Col>
 
         <Col>
@@ -58,9 +68,24 @@ function Category(props) {
             ))}
           </select>
           <div>Total Calories: {props.state.calories}</div>
-          <div>Total Fat: {props.state.selectedItems.reduce((acc, curr) => acc + curr.totalFat, 0).toFixed(2)}</div>
-          <div>Total Protein: {props.state.selectedItems.reduce((acc, curr) => acc + curr.protein, 0).toFixed(2)}</div>
-          <div>Total Carbohydrate: {props.state.selectedItems.reduce((acc, curr) => acc + curr.carbohydrate, 0).toFixed(2)}</div>
+          <div>
+            Total Fat:{" "}
+            {props.state.selectedItems
+              .reduce((acc, curr) => acc + curr.totalFat, 0)
+              .toFixed(2)}
+          </div>
+          <div>
+            Total Protein:{" "}
+            {props.state.selectedItems
+              .reduce((acc, curr) => acc + curr.protein, 0)
+              .toFixed(2)}
+          </div>
+          <div>
+            Total Carbohydrate:{" "}
+            {props.state.selectedItems
+              .reduce((acc, curr) => acc + curr.carbohydrate, 0)
+              .toFixed(2)}
+          </div>
         </Col>
       </Row>
     </Container>
