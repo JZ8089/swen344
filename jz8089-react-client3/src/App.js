@@ -318,6 +318,7 @@ class App extends Component {
       <div>
         <Header />
         <CaloriesGoal
+          calories={this.state.calories}
           caloriesGoal={this.state.caloriesGoal}
           modalOpen={this.state.calorieGoalModal}
           toggleModal={() =>

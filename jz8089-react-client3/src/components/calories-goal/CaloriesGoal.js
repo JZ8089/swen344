@@ -7,9 +7,12 @@ import {
   ModalBody,
   ModalFooter,
   Input,
+  Progress,
+  UncontrolledTooltip,
 } from "reactstrap";
 
 const CaloriesGoal = ({
+  calories,
   caloriesGoal,
   modalOpen,
   toggleModal,
@@ -43,6 +46,17 @@ const CaloriesGoal = ({
         <Button color="primary" onClick={toggleModal}>
           Update goal
         </Button>
+      </Col>
+      <Col className="mt-3">
+        <Progress
+          animated
+          value={calories}
+          max={caloriesGoal}
+          id="tooltip-progress"
+        />
+        <UncontrolledTooltip target="tooltip-progress" placement="bottom">
+          Total calorie goal progress
+        </UncontrolledTooltip>
       </Col>
     </Container>
   );
