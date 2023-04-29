@@ -264,7 +264,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:5000/get_all_food_items/get_all_categories")
+    fetch("http://localhost:5000/get_all_categories")
       .then(res => res.json())
       .then(json => this.setState({ categories: json }))
   }
