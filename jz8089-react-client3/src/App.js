@@ -265,14 +265,17 @@ class App extends Component {
 
   componentDidMount() {
     fetch("http://localhost:5000/get_all_categories")
-      .then(res => res.json())
-      .then(json => this.setState({ categories: json }))
+      .then((res) => res.json())
+      .then((json) => this.setState({ categories: json }));
   }
 
-  handleCategoryChange(evt) {
-    const categoryItems = fetch(`http://localhost:5000/get_all_food_items/${evt.target.value}`)
-      .then(res => res.json())
-      .then(json => json.map(item => ({
+  async handleCategoryChange(evt) {
+    if (evt.target.value) {
+      const response = await fetch(
+        `http://localhost:5000/get_all_food_items/${evt.target.value}`
+      );
+      const parsedResponse = await response.json();
+      const categoryItems = parsedResponse.map((item) => ({
         name: item[0],
         calories: item[1],
         totalFat: item[2],
@@ -280,9 +283,7 @@ class App extends Component {
         transFat: item[4],
         protein: item[5],
         carbohydrate: item[6],
-      })));
-    
-    if (categoryItems) {
+      }));
       this.setState({ categoryItems: categoryItems, selectedItem: "" });
     } else {
       this.setState({ categoryItems: [], selectedItem: "" });
