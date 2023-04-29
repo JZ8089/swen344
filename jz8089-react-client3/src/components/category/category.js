@@ -34,11 +34,12 @@ function Category(props) {
           <label htmlFor="foodCategorySelect">Categories</label>
           <select onChange={props.handleCategoryChange}>
             <option value=""></option>
-            <option value="proteins">Proteins</option>
+            {props.state.categories.map(category => <option value={category}>{category}</option>)}
+            {/* <option value="proteins">Proteins</option>
             <option value="fruits">Fruits</option>
             <option value="vegetables">Vegetables</option>
             <option value="dairy">Dairy</option>
-            <option value="grain">Grain</option>
+            <option value="grain">Grain</option> */}
           </select>
         </Col>
 

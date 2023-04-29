@@ -254,12 +254,18 @@ class App extends Component {
       selectedItems: [],
       caloriesGoal: 2000,
       calorieGoalModal: false,
+      categories: [],
     };
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.changeFoodListHandler = this.changeFoodListHandler.bind(this);
     this.changeSelectItemHandler = this.changeSelectItemHandler.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.changeCalorieGoalHandler = this.changeCalorieGoalHandler.bind(this);
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:5000/get_all_food_items/get_all_categories")
+      .then(res => this.setState({ categories: res.data }))
   }
 
   handleCategoryChange(evt) {
@@ -305,7 +311,6 @@ class App extends Component {
   }
 
   changeSelectItemHandler(evt) {
-    console.log(evt.target.value);
     this.setState({ selectedItem: evt.target.value, buttonDirection: "<<" });
   }
 
