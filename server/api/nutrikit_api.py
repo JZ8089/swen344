@@ -26,7 +26,25 @@ class get_all_food_items(Resource):
        return result[0]
    
 class put_food_item(Resource):
-    def put(self,name, calories, total_fat, saturdated_fat, trans_fat, protein, carbohydrate):
+    def put(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str, required=True)
+        parser.add_argument('calories', type=str, required=True)
+        parser.add_argument('total_fat', type=str, required=True)
+        parser.add_argument('saturdated_fat', type=str, required=True)
+        parser.add_argument('trans_fat', type=str, required=True)
+        parser.add_argument('protein', type=str, required=True)
+        parser.add_argument('carbohydrate', type=str, required=True)
+        
+        args = parser.parse_args()
+        
+        name = args['name']
+        calories = args['calories']
+        total_fat = args['total_fat']
+        saturdated_fat = args['saturdated_fat']
+        trans_fat = args['trans_fat']
+        protein = args['protein']
+        carbohydrate = args['carbohydrate']
         
         exec_commit(f"""UPDATE food_item set calories='{calories}', total_fat='{total_fat}',
                             saturdated_fat='{saturdated_fat}', trans_fat='{trans_fat}',
@@ -34,7 +52,26 @@ class put_food_item(Resource):
         
         return (name + " has been updated")
 class post_new_food_item(Resource):
-    def post(self,category,name, calories, total_fat, saturdated_fat, trans_fat, protein, carbohydrate):
+    def post(self,category):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str, required=True)
+        parser.add_argument('calories', type=str, required=True)
+        parser.add_argument('total_fat', type=str, required=True)
+        parser.add_argument('saturdated_fat', type=str, required=True)
+        parser.add_argument('trans_fat', type=str, required=True)
+        parser.add_argument('protein', type=str, required=True)
+        parser.add_argument('carbohydrate', type=str, required=True)
+        
+        args = parser.parse_args()
+        
+        name = args['name']
+        calories = args['calories']
+        total_fat = args['total_fat']
+        saturdated_fat = args['saturdated_fat']
+        trans_fat = args['trans_fat']
+        protein = args['protein']
+        carbohydrate = args['carbohydrate']
+        
         category_id = exec_get_one(f"""SELECT id from category WHERE name='{category}'""")
         exec_commit(f""" INSERT INTO food_item (name, calories, total_fat, saturdated_fat, trans_fat, protein, carbohydrate)
                                 VALUES ('{name}', '{calories}', '{total_fat}', '{saturdated_fat}',
