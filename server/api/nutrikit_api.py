@@ -23,7 +23,7 @@ class get_all_food_items(Resource):
                                             WHERE category_id = {category_id[0]} """)
     # categories = [category[0] for category in result ]
        
-       return result[0]
+       return result
    
 class put_food_item(Resource):
     def put(self):

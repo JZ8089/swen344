@@ -37,6 +37,8 @@ INSERT INTO food_item(name, calories, total_fat, saturdated_fat, trans_fat, prot
             VALUES('milk', 300, 12.1, 8.6, 2.5, 7, 13);
 INSERT INTO food_item(name, calories, total_fat, saturdated_fat, trans_fat, protein, carbohydrate)
             VALUES('bread', 200, 5, 5, 0, 2, 16);
+INSERT INTO food_item(name, calories, total_fat, saturdated_fat, trans_fat, protein, carbohydrate)
+            VALUES('bagel', 300, 7.0, 7.0, 0.0, 2.0, 24.0);
 
 CREATE TABLE food_item_category(
     id SERIAL PRIMARY KEY NOT NULL,
@@ -54,3 +56,5 @@ INSERT INTO food_item_category(category_id, food_item_id)
             VALUES(4,4);
 INSERT INTO food_item_category(category_id, food_item_id)
             VALUES(5,5);
+INSERT INTO food_item_category(category_id, food_item_id)
+            VALUES(5,6);
