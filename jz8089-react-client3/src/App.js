@@ -443,6 +443,7 @@ class App extends Component {
     try {
       await fetch("http://localhost:5000/put_food_item", {
         method: "PUT",
+        mode: "cors",
         headers: {
           "Content-Type": "application/json",
         },
