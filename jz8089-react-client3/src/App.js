@@ -274,6 +274,7 @@ class App extends Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.changeCalorieGoalHandler = this.changeCalorieGoalHandler.bind(this);
     this.changeFoodItemFormHandler = this.changeFoodItemFormHandler.bind(this);
+    this.submitAddFoodItemHandler = this.submitAddFoodItemHandler.bind(this);
   }
 
   componentDidMount() {
@@ -391,6 +392,7 @@ class App extends Component {
           categories={this.state.categories}
           addFoodItemForm={this.state.addFoodItemForm}
           onChangeForm={this.changeFoodItemFormHandler}
+          onSubmit={this.submitAddFoodItemHandler}
         />
         <Category
           state={this.state}

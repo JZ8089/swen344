@@ -17,6 +17,7 @@ const FoodItemForm = ({
   categories,
   addFoodItemForm,
   onChangeForm,
+  onSubmit,
 }) => {
   return (
     <Container className="text-center mt-3">
@@ -60,7 +61,7 @@ const FoodItemForm = ({
             type="number"
             className="w-50"
             value={addFoodItemForm.calories}
-            onChange={evt => onChangeForm(evt, "calories")}
+            onChange={(evt) => onChangeForm(evt, "calories")}
           />
 
           <Row className="mt-3">
@@ -70,7 +71,7 @@ const FoodItemForm = ({
                 id="totalFat"
                 type="number"
                 value={addFoodItemForm.totalFat}
-                onChange={evt => onChangeForm(evt, "totalFat")}
+                onChange={(evt) => onChangeForm(evt, "totalFat")}
               />
             </Col>
 
@@ -80,7 +81,7 @@ const FoodItemForm = ({
                 id="saturatedFat"
                 type="number"
                 value={addFoodItemForm.saturatedFat}
-                onChange={evt => onChangeForm(evt, "saturatedFat")}
+                onChange={(evt) => onChangeForm(evt, "saturatedFat")}
               />
             </Col>
 
@@ -90,7 +91,7 @@ const FoodItemForm = ({
                 id="transFat"
                 type="number"
                 value={addFoodItemForm.transFat}
-                onChange={evt => onChangeForm(evt, "transFat")}
+                onChange={(evt) => onChangeForm(evt, "transFat")}
               />
             </Col>
           </Row>
@@ -102,7 +103,7 @@ const FoodItemForm = ({
                 id="protein"
                 type="number"
                 value={addFoodItemForm.protein}
-                onChange={evt => onChangeForm(evt, "protein")}  
+                onChange={(evt) => onChangeForm(evt, "protein")}
               />
             </Col>
 
@@ -112,14 +113,14 @@ const FoodItemForm = ({
                 id="carbohydrate"
                 type="number"
                 value={addFoodItemForm.carbohydrate}
-                onChange={evt => onChangeForm(evt, "carbohydrate")}  
+                onChange={(evt) => onChangeForm(evt, "carbohydrate")}
               />
             </Col>
           </Row>
         </ModalBody>
 
         <ModalFooter className="mt-2">
-          <Button color="primary" onClick={toggleModal}>
+          <Button color="primary" onClick={onSubmit}>
             Add
           </Button>
           <Button color="danger" onClick={toggleModal}>
