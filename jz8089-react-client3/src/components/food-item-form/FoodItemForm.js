@@ -34,12 +34,11 @@ const FoodItemForm = ({
                 value={addFoodItemForm.category}
                 onChange={(evt) => onChangeForm(evt, "category")}
               >
+                <option value="">
+                  {""}
+                </option>
                 {categories.map((category) => (
-                  <option
-                    key={category}
-                    value={category}
-                    selected={addFoodItemForm.category === category}
-                  >
+                  <option key={category} value={category}>
                     {category}
                   </option>
                 ))}
@@ -124,7 +123,11 @@ const FoodItemForm = ({
         </ModalBody>
 
         <ModalFooter className="mt-2">
-          <Button color="primary" onClick={onSubmit}>
+          <Button
+            color="primary"
+            onClick={onSubmit}
+            disabled={!!addFoodItemForm.category}
+          >
             Add
           </Button>
           <Button color="danger" onClick={toggleModal}>
