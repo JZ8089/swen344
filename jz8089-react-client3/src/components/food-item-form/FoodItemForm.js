@@ -126,7 +126,7 @@ const FoodItemForm = ({
           <Button
             color="primary"
             onClick={onSubmit}
-            disabled={!!addFoodItemForm.category}
+            disabled={!addFoodItemForm.category}
           >
             Add
           </Button>

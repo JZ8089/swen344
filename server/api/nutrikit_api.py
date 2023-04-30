@@ -30,9 +30,9 @@ class put_food_item(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True)
         parser.add_argument('calories', type=str, required=True)
-        parser.add_argument('total_fat', type=str, required=True)
-        parser.add_argument('saturated_fat', type=str, required=True)
-        parser.add_argument('trans_fat', type=str, required=True)
+        parser.add_argument('totalFat', type=str, required=True)
+        parser.add_argument('saturatedFat', type=str, required=True)
+        parser.add_argument('transFat', type=str, required=True)
         parser.add_argument('protein', type=str, required=True)
         parser.add_argument('carbohydrate', type=str, required=True)
         
@@ -40,9 +40,9 @@ class put_food_item(Resource):
         
         name = args['name']
         calories = args['calories']
-        total_fat = args['total_fat']
-        saturated_fat = args['saturated_fat']
-        trans_fat = args['trans_fat']
+        total_fat = args['totalFat']
+        saturated_fat = args['saturatedFat']
+        trans_fat = args['transFat']
         protein = args['protein']
         carbohydrate = args['carbohydrate']
         

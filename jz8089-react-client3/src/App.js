@@ -433,7 +433,7 @@ class App extends Component {
     this.setState((prevState) => ({
       editFoodItemForm: {
         ...prevState.editFoodItemForm,
-        [name]: evt.target.value,
+        [name]: +evt.target.value,
       },
     }));
   }
