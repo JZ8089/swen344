@@ -12,8 +12,8 @@ api = Api(app) #api router
 
 api.add_resource(get_all_categories,'/get_all_categories')
 api.add_resource(get_all_food_items,'/get_all_food_items/<string:category>')
-api.add_resource(put_food_item, '/put_food_item/<string:name>/<float:calories>/<float:total_fat>/<float:saturdated_fat>/<float:trans_fat>/<float:protein>/<float:carbohydrate>')
-api.add_resource(post_new_food_item, '/post_new_food_item/<string:category>/<string:name>/<float:calories>/<float:total_fat>/<float:saturdated_fat>/<float:trans_fat>/<float:protein>/<float:carbohydrate>')
+api.add_resource(put_food_item, '/put_food_item/<string:name>')
+api.add_resource(post_new_food_item, '/post_new_food_item/<string:category>')
 api.add_resource(delete_food_item,'/delete_food_item/<string:name>')
 if __name__ == '__main__':
     print("Loading db")
