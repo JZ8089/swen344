@@ -273,6 +273,7 @@ class App extends Component {
     this.changeSelectItemHandler = this.changeSelectItemHandler.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.changeCalorieGoalHandler = this.changeCalorieGoalHandler.bind(this);
+    this.changeFoodItemFormHandler = this.changeFoodItemFormHandler.bind(this);
   }
 
   componentDidMount() {
@@ -343,6 +344,28 @@ class App extends Component {
     this.setState({ caloriesGoal: evt.target.value });
   }
 
+  changeFoodItemFormHandler(evt, name) {
+    this.setState((prevState) => ({
+      addFoodItemForm: {
+        ...prevState.addFoodItemForm,
+        [name]: evt.target.value,
+      },
+    }));
+  }
+
+  async submitAddFoodItemHandler() {
+    await fetch("http://localhost:5000/post_new_food_item", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(this.state.addFoodItemForm),
+    });
+    if (this.state.categoryItems.length) {
+      this.setState(prevState => ({ categoryItems: [...prevState.categoryItems, this.state.addFoodItemForm] }));
+    }
+  }
+
   render() {
     return (
       <div>
@@ -366,6 +389,8 @@ class App extends Component {
             }))
           }
           categories={this.state.categories}
+          addFoodItemForm={this.state.addFoodItemForm}
+          onChangeForm={this.changeFoodItemFormHandler}
         />
         <Category
           state={this.state}

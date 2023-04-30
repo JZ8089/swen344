@@ -11,7 +11,13 @@ import {
   Row,
 } from "reactstrap";
 
-const FoodItemForm = ({ modalOpen, toggleModal, categories }) => {
+const FoodItemForm = ({
+  modalOpen,
+  toggleModal,
+  categories,
+  addFoodItemForm,
+  onChangeForm,
+}) => {
   return (
     <Container className="text-center mt-3">
       <Modal isOpen={modalOpen} toggle={toggleModal}>
@@ -21,7 +27,12 @@ const FoodItemForm = ({ modalOpen, toggleModal, categories }) => {
           <Row>
             <Col sm={6}>
               <Label for="category">Category Name</Label>
-              <Input id="category" type="select">
+              <Input
+                id="category"
+                type="select"
+                value={addFoodItemForm.category}
+                onChange={(evt) => onChangeForm(evt, "category")}
+              >
                 {categories.map((category) => (
                   <option key={category} value={category}>
                     {category}
@@ -32,41 +43,77 @@ const FoodItemForm = ({ modalOpen, toggleModal, categories }) => {
 
             <Col sm={6}>
               <Label for="name">Food Item Name</Label>
-              <Input id="name" type="text" />
+              <Input
+                id="name"
+                type="text"
+                value={addFoodItemForm.name}
+                onChange={(evt) => onChangeForm(evt, "name")}
+              />
             </Col>
           </Row>
 
           <Label for="calories" className="mt-3">
             Calories
           </Label>
-          <Input id="calories" type="number" className="w-50" />
+          <Input
+            id="calories"
+            type="number"
+            className="w-50"
+            value={addFoodItemForm.calories}
+            onChange={evt => onChangeForm(evt, "calories")}
+          />
 
           <Row className="mt-3">
             <Col sm={4}>
               <Label for="totalFat">Total Fat</Label>
-              <Input id="totalFat" type="number" />
+              <Input
+                id="totalFat"
+                type="number"
+                value={addFoodItemForm.totalFat}
+                onChange={evt => onChangeForm(evt, "totalFat")}
+              />
             </Col>
 
             <Col sm={4}>
               <Label for="saturatedFat">Saturated Fat</Label>
-              <Input id="saturatedFat" type="number" />
+              <Input
+                id="saturatedFat"
+                type="number"
+                value={addFoodItemForm.saturatedFat}
+                onChange={evt => onChangeForm(evt, "saturatedFat")}
+              />
             </Col>
 
             <Col sm={4}>
               <Label for="transFat">Trans Fat</Label>
-              <Input id="transFat" type="number" />
+              <Input
+                id="transFat"
+                type="number"
+                value={addFoodItemForm.transFat}
+                onChange={evt => onChangeForm(evt, "transFat")}
+              />
             </Col>
           </Row>
 
           <Row className="mt-3">
             <Col sm={6}>
               <Label for="protein">Protein</Label>
-              <Input id="protein" type="number" />
+              <Input
+                id="protein"
+                type="number"
+                value={addFoodItemForm.protein}
+                onChange={evt => onChangeForm(evt, "protein")}  
+              />
             </Col>
 
             <Col sm={6}>
               <Label for="carbohydrate">Carbohydrate</Label>
-              <Input id="carbohydrate" type="number" />
+              <Input
+                id="carbohydrate"
+                type="number"
+                value={addFoodItemForm.carbohydrate}
+                onChange={evt => onChangeForm(evt, "carbohydrate")}  
+              />
             </Col>
           </Row>
         </ModalBody>
