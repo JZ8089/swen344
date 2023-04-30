@@ -35,7 +35,11 @@ const FoodItemForm = ({
                 onChange={(evt) => onChangeForm(evt, "category")}
               >
                 {categories.map((category) => (
-                  <option key={category} value={category}>
+                  <option
+                    key={category}
+                    value={category}
+                    selected={addFoodItemForm.category === category}
+                  >
                     {category}
                   </option>
                 ))}
