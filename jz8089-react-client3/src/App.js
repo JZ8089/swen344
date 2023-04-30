@@ -365,6 +365,7 @@ class App extends Component {
     if (this.state.categoryItems.length) {
       this.setState(prevState => ({ categoryItems: [...prevState.categoryItems, this.state.addFoodItemForm] }));
     }
+    this.setState({ addFoodItemModal: false });
   }
 
   render() {
