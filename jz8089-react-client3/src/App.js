@@ -440,13 +440,17 @@ class App extends Component {
 
   async submitEditFoodItemHandler() {
     const editedFoodItem = this.state.editFoodItemForm;
-    await fetch("http://localhost:5000/put_food_item", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedFoodItem),
-    });
+    try {
+      await fetch("http://localhost:5000/put_food_item", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedFoodItem),
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
     this.setState((prevState) => ({
       categoryItems: prevState.categoryItems.map((item) => {
         if (item.name === editedFoodItem.name) {
