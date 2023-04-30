@@ -249,33 +249,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryItems: [
-        {
-          name: "pineapple",
-          calories: 100,
-          totalFat: 1.2,
-          saturatedFat: 1.2,
-          transFat: 0.0,
-          protein: 0.5,
-          carbohydrate: 12.0,
-        },
-        {
-          name: "grapes",
-          calories: 80,
-          totalFat: 0.0,
-          saturatedFat: 0.0,
-          transFat: 0.0,
-          protein: 0.0,
-          carbohydrate: 4.0,
-        },
-      ],
+      categoryItems: [],
       selectedItem: "",
       buttonDirection: ">>",
       calories: 0,
       selectedItems: [],
       caloriesGoal: 2000,
       calorieGoalModal: false,
-      categories: ["Protein", "Fruits"],
+      categories: [],
       addFoodItemModal: false,
       addFoodItemForm: {
         category: "",
