@@ -20,7 +20,7 @@ const FoodItemForm = ({
   onSubmit,
 }) => {
   return (
-    <Container className="text-center mt-3">
+    <Container>
       <Modal isOpen={modalOpen} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>Add a new food item</ModalHeader>
 

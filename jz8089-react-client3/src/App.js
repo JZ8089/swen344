@@ -5,6 +5,7 @@ import Category from "./components/category/category";
 import NutritionFacts from "./components/nutrition-facts/NutritionFacts";
 import CaloriesGoal from "./components/calories-goal/CaloriesGoal";
 import FoodItemForm from "./components/food-item-form/FoodItemForm";
+import { Button, Container, Row, Col } from "reactstrap";
 
 // const foodData = {
 //   proteins: [
@@ -248,14 +249,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryItems: [],
+      categoryItems: [
+        {
+          name: "pineapple",
+          calories: 100,
+          totalFat: 1.2,
+          saturatedFat: 1.2,
+          transFat: 0.0,
+          protein: 0.5,
+          carbohydrate: 12.0,
+        },
+        {
+          name: "grapes",
+          calories: 80,
+          totalFat: 0.0,
+          saturatedFat: 0.0,
+          transFat: 0.0,
+          protein: 0.0,
+          carbohydrate: 4.0,
+        },
+      ],
       selectedItem: "",
       buttonDirection: ">>",
       calories: 0,
       selectedItems: [],
       caloriesGoal: 2000,
       calorieGoalModal: false,
-      categories: [],
+      categories: ["Protein", "Fruits"],
       addFoodItemModal: false,
       addFoodItemForm: {
         category: "",
@@ -275,6 +295,7 @@ class App extends Component {
     this.changeCalorieGoalHandler = this.changeCalorieGoalHandler.bind(this);
     this.changeFoodItemFormHandler = this.changeFoodItemFormHandler.bind(this);
     this.submitAddFoodItemHandler = this.submitAddFoodItemHandler.bind(this);
+    this.deleteFoodItemHandler = this.deleteFoodItemHandler.bind(this);
   }
 
   componentDidMount() {
@@ -363,9 +384,38 @@ class App extends Component {
       body: JSON.stringify(this.state.addFoodItemForm),
     });
     if (this.state.categoryItems.length) {
-      this.setState(prevState => ({ categoryItems: [...prevState.categoryItems, this.state.addFoodItemForm] }));
+      this.setState((prevState) => ({
+        categoryItems: [...prevState.categoryItems, this.state.addFoodItemForm],
+      }));
     }
-    this.setState({ addFoodItemModal: false });
+    this.setState({
+      addFoodItemModal: false,
+      addFoodItemForm: {
+        category: "",
+        name: "",
+        calories: "",
+        totalFat: "",
+        saturatedFat: "",
+        transFat: "",
+        protein: "",
+        carbohydrate: "",
+      },
+    });
+  }
+
+  async deleteFoodItemHandler() {
+    const deletedItem = this.state.selectedItem;
+    await fetch(
+      `http://localhost:5000/delete_food_item/${deletedItem}`,
+      {
+        method: "DELETE",
+      }
+    );
+    this.setState(prevState => ({
+      categoryItems: prevState.categoryItems.filter(item => item.name !== deletedItem),
+      selectedItems: prevState.selectedItems.filter(item => item.name !== deletedItem),
+      selectedItem: "",
+    }));
   }
 
   render() {
@@ -383,18 +433,34 @@ class App extends Component {
           }
           changeCalorieGoal={this.changeCalorieGoalHandler}
         />
-        <FoodItemForm
-          modalOpen={this.state.addFoodItemModal}
-          toggleModal={() =>
-            this.setState((prevState) => ({
-              addFoodItemModal: !prevState.addFoodItemModal,
-            }))
-          }
-          categories={this.state.categories}
-          addFoodItemForm={this.state.addFoodItemForm}
-          onChangeForm={this.changeFoodItemFormHandler}
-          onSubmit={this.submitAddFoodItemHandler}
-        />
+        <Container className="mt-3">
+          <Row>
+            {this.state.selectedItem && (
+              <Col sm={6} className="text-end">
+                <Button color="danger" onClick={this.deleteFoodItemHandler}>
+                  Delete item
+                </Button>
+              </Col>
+            )}
+            <Col
+              sm={this.state.selectedItem ? 6 : 12}
+              className={this.state.selectedItem ? "text-start" : "text-center"}
+            >
+              <FoodItemForm
+                modalOpen={this.state.addFoodItemModal}
+                toggleModal={() =>
+                  this.setState((prevState) => ({
+                    addFoodItemModal: !prevState.addFoodItemModal,
+                  }))
+                }
+                categories={this.state.categories}
+                addFoodItemForm={this.state.addFoodItemForm}
+                onChangeForm={this.changeFoodItemFormHandler}
+                onSubmit={this.submitAddFoodItemHandler}
+              />
+            </Col>
+          </Row>
+        </Container>
         <Category
           state={this.state}
           changeSelectItemHandler={this.changeSelectItemHandler}
