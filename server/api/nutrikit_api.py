@@ -17,7 +17,7 @@ class get_all_food_items(Resource):
     def get(self,category):
     # NOTE: No need to replicate code; use the util function!
        category_id = exec_get_one(f"""SELECT id FROM category WHERE name='{category}'""")
-       result = exec_get_all(f"""SELECT fi.name, fi.calories, fi.total_fat, fi.saturdated_fat, fi.trans_fat, fi.protein, fi.carbohydrate 
+       result = exec_get_all(f"""SELECT fi.name, fi.calories, fi.total_fat, fi.saturated_fat, fi.trans_fat, fi.protein, fi.carbohydrate 
                                     FROM food_item_category 
                                         INNER JOIN food_item as fi ON fi.id = food_item_category.food_item_id 
                                             WHERE category_id = {category_id[0]} """)
@@ -31,7 +31,7 @@ class put_food_item(Resource):
         parser.add_argument('name', type=str, required=True)
         parser.add_argument('calories', type=str, required=True)
         parser.add_argument('total_fat', type=str, required=True)
-        parser.add_argument('saturdated_fat', type=str, required=True)
+        parser.add_argument('saturated_fat', type=str, required=True)
         parser.add_argument('trans_fat', type=str, required=True)
         parser.add_argument('protein', type=str, required=True)
         parser.add_argument('carbohydrate', type=str, required=True)
@@ -41,13 +41,13 @@ class put_food_item(Resource):
         name = args['name']
         calories = args['calories']
         total_fat = args['total_fat']
-        saturdated_fat = args['saturdated_fat']
+        saturated_fat = args['saturated_fat']
         trans_fat = args['trans_fat']
         protein = args['protein']
         carbohydrate = args['carbohydrate']
         
         exec_commit(f"""UPDATE food_item set calories='{calories}', total_fat='{total_fat}',
-                            saturdated_fat='{saturdated_fat}', trans_fat='{trans_fat}',
+                            saturated_fat='{saturated_fat}', trans_fat='{trans_fat}',
                                 protein='{protein}', carbohydrate='{carbohydrate}' WHERE name = '{name}'""")
         
         return (name + " has been updated")
@@ -58,7 +58,7 @@ class post_new_food_item(Resource):
         parser.add_argument('name', type=str, required=True)
         parser.add_argument('calories', type=str, required=True)
         parser.add_argument('totalFat', type=str, required=True)
-        parser.add_argument('saturdatedFat', type=str, required=True)
+        parser.add_argument('saturatedFat', type=str, required=True)
         parser.add_argument('transFat', type=str, required=True)
         parser.add_argument('protein', type=str, required=True)
         parser.add_argument('carbohydrate', type=str, required=True)
@@ -69,14 +69,14 @@ class post_new_food_item(Resource):
         name = args['name']
         calories = args['calories']
         total_fat = args['totalFat']
-        saturdated_fat = args['saturdatedFat']
+        saturated_fat = args['saturatedFat']
         trans_fat = args['transFat']
         protein = args['protein']
         carbohydrate = args['carbohydrate']
         
         category_id = exec_get_one(f"""SELECT id from category WHERE name='{category}'""")
-        exec_commit(f""" INSERT INTO food_item (name, calories, total_fat, saturdated_fat, trans_fat, protein, carbohydrate)
-                                VALUES ('{name}', '{calories}', '{total_fat}', '{saturdated_fat}',
+        exec_commit(f""" INSERT INTO food_item (name, calories, total_fat, saturated_fat, trans_fat, protein, carbohydrate)
+                                VALUES ('{name}', '{calories}', '{total_fat}', '{saturated_fat}',
                                         '{trans_fat}', '{protein}','{carbohydrate}')""")
         food_item_id = exec_get_one(f"""select id from food_item WHERE name='{name}'""" )
         exec_commit(f""" INSERT INTO food_item_category (category_id, food_item_id)
