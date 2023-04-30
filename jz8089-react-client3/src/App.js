@@ -6,6 +6,7 @@ import NutritionFacts from "./components/nutrition-facts/NutritionFacts";
 import CaloriesGoal from "./components/calories-goal/CaloriesGoal";
 import FoodItemForm from "./components/food-item-form/FoodItemForm";
 import { Button, Container, Row, Col } from "reactstrap";
+import EditFoodItem from "./components/edit-food-item/EditFoodItem";
 
 // const foodData = {
 //   proteins: [
@@ -268,6 +269,15 @@ class App extends Component {
         protein: "",
         carbohydrate: "",
       },
+      editingFoodItem: false,
+      editFoodItemForm: {
+        calories: "",
+        totalFat: "",
+        saturatedFat: "",
+        transFat: "",
+        protein: "",
+        carbohydrate: "",
+      },
     };
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.changeFoodListHandler = this.changeFoodListHandler.bind(this);
@@ -277,6 +287,9 @@ class App extends Component {
     this.changeFoodItemFormHandler = this.changeFoodItemFormHandler.bind(this);
     this.submitAddFoodItemHandler = this.submitAddFoodItemHandler.bind(this);
     this.deleteFoodItemHandler = this.deleteFoodItemHandler.bind(this);
+    this.editFoodItemHandler = this.editFoodItemHandler.bind(this);
+    this.changeEditFoodItemHandler = this.changeEditFoodItemHandler.bind(this);
+    this.submitEditFoodItemHandler = this.submitEditFoodItemHandler.bind(this);
   }
 
   componentDidMount() {
@@ -386,16 +399,78 @@ class App extends Component {
 
   async deleteFoodItemHandler() {
     const deletedItem = this.state.selectedItem;
-    await fetch(
-      `http://localhost:5000/delete_food_item/${deletedItem}`,
-      {
-        method: "DELETE",
-      }
-    );
-    this.setState(prevState => ({
-      categoryItems: prevState.categoryItems.filter(item => item.name !== deletedItem),
-      selectedItems: prevState.selectedItems.filter(item => item.name !== deletedItem),
+    await fetch(`http://localhost:5000/delete_food_item/${deletedItem}`, {
+      method: "DELETE",
+    });
+    this.setState((prevState) => ({
+      categoryItems: prevState.categoryItems.filter(
+        (item) => item.name !== deletedItem
+      ),
+      selectedItems: prevState.selectedItems.filter(
+        (item) => item.name !== deletedItem
+      ),
       selectedItem: "",
+    }));
+  }
+
+  editFoodItemHandler() {
+    if (this.state.editingFoodItem) {
+      this.setState({ editingFoodItem: false });
+    } else {
+      let foundItem = this.state.categoryItems.find(
+        (item) => item.name === this.state.selectedItem
+      );
+      if (!foundItem) {
+        foundItem = this.state.selectedItems.find(
+          (item) => item.name === this.state.selectedItem
+        );
+      }
+      this.setState({ editingFoodItem: true, editFoodItemForm: foundItem });
+    }
+  }
+
+  changeEditFoodItemHandler(evt, name) {
+    this.setState((prevState) => ({
+      editFoodItemForm: {
+        ...prevState.editFoodItemForm,
+        [name]: evt.target.value,
+      },
+    }));
+  }
+
+  async submitEditFoodItemHandler() {
+    const editedFoodItem = this.state.editFoodItemForm;
+    await fetch("http://localhost:5000/put_food_item", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedFoodItem),
+    });
+    this.setState((prevState) => ({
+      categoryItems: prevState.categoryItems.map((item) => {
+        if (item.name === editedFoodItem.name) {
+          return editedFoodItem;
+        } else {
+          return item;
+        }
+      }),
+      selectedItems: prevState.selectedItems.map((item) => {
+        if (item.name === editedFoodItem.name) {
+          return editedFoodItem;
+        } else {
+          return item;
+        }
+      }),
+      editingFoodItem: false,
+      editFoodItemForm: {
+        calories: "",
+        totalFat: "",
+        saturatedFat: "",
+        transFat: "",
+        protein: "",
+        carbohydrate: "",
+      },
     }));
   }
 
@@ -417,11 +492,22 @@ class App extends Component {
         <Container className="mt-3">
           <Row>
             {this.state.selectedItem && (
-              <Col sm={6} className="text-end">
-                <Button color="danger" onClick={this.deleteFoodItemHandler}>
-                  Delete item
-                </Button>
-              </Col>
+              <>
+                <Col sm={4} className="text-end">
+                  <EditFoodItem
+                    modalOpen={this.state.editingFoodItem}
+                    toggleModal={this.editFoodItemHandler}
+                    editFoodItemForm={this.state.editFoodItemForm}
+                    onChangeForm={this.changeEditFoodItemHandler}
+                    onSubmit={this.submitEditFoodItemHandler}
+                  />
+                </Col>
+                <Col sm={2} className="text-center">
+                  <Button color="danger" onClick={this.deleteFoodItemHandler}>
+                    Delete item
+                  </Button>
+                </Col>
+              </>
             )}
             <Col
               sm={this.state.selectedItem ? 6 : 12}
