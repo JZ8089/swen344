@@ -4,6 +4,7 @@ import Header from "./components/header/header";
 import Category from "./components/category/category";
 import NutritionFacts from "./components/nutrition-facts/NutritionFacts";
 import CaloriesGoal from "./components/calories-goal/CaloriesGoal";
+import FoodItemForm from "./components/food-item-form/FoodItemForm";
 
 // const foodData = {
 //   proteins: [
@@ -255,6 +256,17 @@ class App extends Component {
       caloriesGoal: 2000,
       calorieGoalModal: false,
       categories: [],
+      addFoodItemModal: false,
+      addFoodItemForm: {
+        category: "",
+        name: "",
+        calories: "",
+        totalFat: "",
+        saturatedFat: "",
+        transFat: "",
+        protein: "",
+        carbohydrate: "",
+      },
     };
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.changeFoodListHandler = this.changeFoodListHandler.bind(this);
@@ -345,6 +357,15 @@ class App extends Component {
             }))
           }
           changeCalorieGoal={this.changeCalorieGoalHandler}
+        />
+        <FoodItemForm
+          modalOpen={this.state.addFoodItemModal}
+          toggleModal={() =>
+            this.setState((prevState) => ({
+              addFoodItemModal: !prevState.addFoodItemModal,
+            }))
+          }
+          categories={this.state.categories}
         />
         <Category
           state={this.state}
