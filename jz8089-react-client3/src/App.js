@@ -22,7 +22,7 @@ class App extends Component {
       caloriesGoal: 2000,
       calorieGoalModal: false,
       totalFat: 0,
-      totalFatGoal:2000,
+      totalFatGoal: 0,
       totalFatGoalModal: false,
       // saturatedFat: 0,
       // saturatedFatGoal:2000,
@@ -54,7 +54,7 @@ class App extends Component {
     this.changeSelectItemHandler = this.changeSelectItemHandler.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.changeCalorieGoalHandler = this.changeCalorieGoalHandler.bind(this);
-    this.changeTotalFatGoalHandler = this.changeTotalFatHandler.bind(this);
+    this.changeTotalFatHandler = this.changeTotalFatHandler.bind(this);
     this.changeFoodItemFormHandler = this.changeFoodItemFormHandler.bind(this);
     this.submitAddFoodItemHandler = this.submitAddFoodItemHandler.bind(this);
     this.deleteFoodItemHandler = this.deleteFoodItemHandler.bind(this);
@@ -109,12 +109,14 @@ class App extends Component {
           selectedItems: newSelectedItems,
           calories: prevState.calories - foodItem.calories,
           selectedItem: "",
+          totalFat: prevState.totalFat - foodItem.totalFat
         };
       });
     } else if (this.state.buttonDirection === ">>") {
       this.setState((prevState) => ({
         selectedItems: [...prevState.selectedItems, foodItem],
         calories: prevState.calories + foodItem.calories,
+        totalFat: prevState.totalFat + foodItem.totalFat,
       }));
     }
   }
@@ -295,7 +297,7 @@ class App extends Component {
           }
           changeSaturatedFatGoal={this.changeSaturatedFatHandler}
         /> */}
-        <Container className="mt-3">
+        <Container className="mt-5">
           <Row>
             {this.state.selectedItem && (
               <>

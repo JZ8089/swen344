@@ -16,10 +16,10 @@ import {
     totalFatGoal,
     modalOpen,
     toggleModal,
-    changeTotalFat,
+    changeTotalFatGoal,
   }) => {
     return (
-      <Container className="text-center mt-5">
+      <Container className="text-center mt-3">
         <Modal isOpen={modalOpen} toggle={toggleModal}>
           <ModalHeader toggle={toggleModal}>
             Update your total fat goal
@@ -29,7 +29,7 @@ import {
               type="number"
               className="w-50"
               value={totalFatGoal}
-              onChange={changeTotalFat}
+              onChange={changeTotalFatGoal}
             />
           </ModalBody>
           <ModalFooter>
