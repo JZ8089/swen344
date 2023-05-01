@@ -4,6 +4,8 @@ import Header from "./components/header/header";
 import Category from "./components/category/category";
 import NutritionFacts from "./components/nutrition-facts/NutritionFacts";
 import CaloriesGoal from "./components/calories-goal/CaloriesGoal";
+import TotalFat from "./components/total-fat/TotalFat";
+// import SaturatedFat from "./components/saturated-fat/SaturatedFat";
 import FoodItemForm from "./components/food-item-form/FoodItemForm";
 import { Button, Container, Row, Col } from "reactstrap";
 import EditFoodItem from "./components/edit-food-item/EditFoodItem";
@@ -11,7 +13,7 @@ import EditFoodItem from "./components/edit-food-item/EditFoodItem";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
       categoryItems: [],
       selectedItem: "",
       buttonDirection: ">>",
@@ -19,6 +21,12 @@ class App extends Component {
       selectedItems: [],
       caloriesGoal: 2000,
       calorieGoalModal: false,
+      totalFat: 0,
+      totalFatGoal:2000,
+      totalFatGoalModal: false,
+      // saturatedFat: 0,
+      // saturatedFatGoal:2000,
+      // saturatedFatGoalModal: false,
       categories: [],
       addFoodItemModal: false,
       addFoodItemForm: {
@@ -46,6 +54,7 @@ class App extends Component {
     this.changeSelectItemHandler = this.changeSelectItemHandler.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.changeCalorieGoalHandler = this.changeCalorieGoalHandler.bind(this);
+    this.changeTotalFatGoalHandler = this.changeTotalFatHandler.bind(this);
     this.changeFoodItemFormHandler = this.changeFoodItemFormHandler.bind(this);
     this.submitAddFoodItemHandler = this.submitAddFoodItemHandler.bind(this);
     this.deleteFoodItemHandler = this.deleteFoodItemHandler.bind(this);
@@ -121,6 +130,14 @@ class App extends Component {
   changeCalorieGoalHandler(evt) {
     this.setState({ caloriesGoal: evt.target.value });
   }
+  changeTotalFatHandler(evt){
+    this.setState({ totalFatGoal: evt.target.value})
+  }
+  // changeSaturatedFatHandler(evt){
+  //   this.setState({ saturatedFatGoal: evt.target.value})
+  // }
+  
+
 
   changeFoodItemFormHandler(evt, name) {
     this.setState((prevState) => ({
@@ -256,6 +273,28 @@ class App extends Component {
           }
           changeCalorieGoal={this.changeCalorieGoalHandler}
         />
+        <TotalFat
+          totalFat={this.state.totalFat}
+          totalFatGoal={this.state.totalFatGoal}
+          modalOpen={this.state.totalFatGoalModal}
+          toggleModal={() =>
+            this.setState((prevState) => ({
+              totalFatGoalModal: !prevState.totalFatGoalModal,
+            }))
+          }
+          changeTotalFatGoal={this.changeTotalFatHandler}
+        />
+        {/* <SaturatedFat
+          saturatedFat={this.state.saturatedFat}
+          saturatedFatGoal={this.state.saturatedFatGoal}
+          modalOpen={this.state.saturatedFatGoalModal}
+          toggleModal={() =>
+            this.setState((prevState) => ({
+              saturatedFatGoalModal: !prevState.saturatedFatGoalModal,
+            }))
+          }
+          changeSaturatedFatGoal={this.changeSaturatedFatHandler}
+        /> */}
         <Container className="mt-3">
           <Row>
             {this.state.selectedItem && (
@@ -315,3 +354,4 @@ class App extends Component {
 }
 
 export default App;
+
